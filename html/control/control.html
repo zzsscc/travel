@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base target="_blank" />
+    <title>管控中心</title>
+    <link rel="stylesheet" href="../../css/public.css">
+    <style>
+        #main{
+            position:relative;
+        }
+        /*地图*/
+        .main-container{
+            box-sizing: border-box;
+            width: 100%;
+            border: 1px solid #a3a3a3;
+        }
+        /*wifi*/
+        .zq{
+            width: 250px;
+            height: 180px;
+            background-color: #fff;
+            /*-webkit-transition: 1s;*/
+            /*-moz-transition: 1s;*/
+            /*-ms-transition: 1s;*/
+            /*-o-transition: 1s;*/
+        }
+        .zq a{
+            color: #fff;
+        }
+        .zq-title{
+            height: 30px;
+            width: 155px;
+            line-height: 30px;
+            float: left;
+            text-align: center;
+            color:#fff;
+            background-color: #0ca1e2;
+        }
+        .zq-x{
+            float: right;
+            padding-right: 10px;
+            font-size: 25px;
+            color:#c6c6c6;
+        }
+        .zq-cwrap{
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .zqbtn{
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        .zqbtn .cq{
+            height: 20px;
+            width: 50px;
+            float: left;
+            line-height: 20px;
+            margin-right: 20px;
+            text-align: center;
+            color:#fff;
+            background-color: #00c199;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .zqbtn .dk{
+            height: 20px;
+            width: 50px;
+            float: left;
+            line-height: 20px;
+            margin-right: 20px;
+            text-align: center;
+            color:#fff;
+            background-color: #00c199;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .zqbtn .ck{
+            height: 20px;
+            width: 70px;
+            float: left;
+            line-height: 20px;
+            text-align: center;
+            color:#fff;
+            background-color: #00c199;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        /*闸口*/
+        .zj-logo .zq{
+            height: 140px;
+        }
+        .zj-logo .zq-title{
+            background-color: #f6b61c;
+        }
+        .zj-logo .zqbtn{
+            margin-top: 20px;
+        }
+        .zj-logo .zqbtn .ck{
+            float: right;
+            margin-right: 20px;
+        }
+        /*广播*/
+        .gb-logo .zq-title{
+            background-color: #fb7a53;
+        }
+        /*监控*/
+        .jk-logo .zq{
+            width: 310px;
+        }
+        .jk-logo .zq-title{
+            background-color: #00c199;
+            width: 140px;
+        }
+        .jk-logo .zq-cwrap{
+            float: left;
+            margin-top: 5px;
+            margin-left: 5px;
+            width: 100%;
+        }
+        .jk-logo .zqbtn{
+            float: left;
+            margin-left: 5px;
+            width: 65px;
+        }
+        .jk-logo .zqbtn div{
+            float: left;
+            width: 64px;
+            height:23px;
+            margin-top: 5px;
+        }
+        .jk-logo .zqimg{
+            float: right;
+            width: 155px;
+            height:138px;
+            margin-top: -44px;
+            margin-right: 10px;
+        }
+        /*车船*/
+        .cc-logo .zq{
+            height: 140px;
+        }
+        .cc-logo .zq-title{
+            background-color: #ff8019;
+        }
+        .cc-logo .zqbtn{
+            margin-top: 20px;
+        }
+        .cc-logo .zqbtn .ck{
+            float: right;
+            margin-right: 20px;
+        }
+        /*顶部*/
+        #main .top{
+            box-sizing: border-box;
+            position: absolute;
+            width: 1200px;
+            height: 40px;
+            top:10px;
+            left: 350px;
+        }
+        #main .top-left{
+            box-sizing: border-box;
+            float: left;
+            width: 760px;
+            height: 40px;
+            padding: 10px;
+            border-radius: 4px;
+            background:#fff url('../../img/control-info.png') 98% 50% no-repeat;
+            margin-right: 20px;
+        }
+        #main .top-left span:not(:first-child){
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        #main .top-num{
+            color: #ff6155;
+            margin-right: 0;
+        }
+        #main .top-right{
+            box-sizing: border-box;
+            float: left;
+            width: 420px;
+            height: 40px;
+            border-radius: 4px;
+            background:#fff;
+        }
+        #main .top-search{
+            box-sizing: border-box;
+            height: 40px;
+            line-height: 40px;
+            width: 370px;
+            border-radius: 4px 0 0 4px;
+            padding-left: 10px;
+            color:#666;
+        }
+        #main .top-right-button{
+            width: 50px;
+            height: 40px;
+            box-sizing: border-box;
+            background: #3385ff url('../../img/control-search-button.png') 50% 50% no-repeat;
+            float: right;
+            border-radius:0 4px 4px 0;
+            cursor: pointer;
+        }
+        /*底部*/
+        #main .bottom{
+            width: 860px;
+            height: 140px;
+            position: absolute;
+            bottom: 0;
+            left: 520px;
+        }
+        #main .pic{
+            position: absolute;
+        }
+        #main .platform{
+            bottom: 0;
+        }
+        /*小图标放大效果*/
+        .a1>img{
+            transition: all 1s;
+        }
+        .a1>img:hover{
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div class="container clearfix">
+            <div class="aside-left">椒江旅游大数据平台</div>
+            <div class="header-center">
+                <ul class="clearfix">
+                    <li><a href="control.html" target="_self" class="active">管控中心</a></li>
+                    <li><a href="../operation/operation.html" target="_self">运维中心</a></li>
+                    <li><a href="../态势中心/come-go-situation.html" target="_self">态势中心</a></li>
+                    <li><a href="../marketing/revenue-analyze.html" target="_self">营销中心</a></li>
+                    <li><a href="../舆情中心/public-sentiment-analyze.html" target="_self">舆情中心</a></li>
+                    <li><a href="../bigScreen/bigScreen.html" target="_self">可视化大屏</a></li>
+                </ul>
+            </div>
+            <div class="aside-right"><span class="user-information">欢迎您，<span class="user-name">admin</span></span> | <span class="user-action">注销</span></div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="main-container" id="control-map"></div>
+        <div class="top clearfix">
+            <div class="top-left">
+                <span>当前启用：</span>
+                <span class="show-all">全部 ( <a class="top-num">118</a> )</span>
+                <span class="onlyshow-gb">广播系统 ( <a class="top-num">32</a> )</span>
+                <span class="onlyshow-jk">监控摄像头 ( <a class="top-num">64</a> )</span>
+                <span class="onlyshow-wifi">WIFI源 ( <a class="top-num">16</a> )</span>
+                <span class="onlyshow-zk">闸口 ( <a class="top-num">6</a> )</span>
+            </div>
+            <div class="top-right">
+                <input type="text" placeholder="搜景点、查设备" class="top-search"/>
+                <button class="top-right-button"></button>
+            </div>
+        </div>
+        <div class="bottom">
+            <img src="../../img/platform.png" alt="" class="pic platform">
+            <div class="a1">
+                <img src="../../img/control-1.png" alt="" class="pic icon onlyshow-gb">
+                <img src="../../img/control-2.png" alt="" class="pic icon onlyshow-jk">
+                <img src="../../img/control-3.png" alt="" class="pic icon onlyshow-wifi">
+                <img src="../../img/control-4.png" alt="" class="pic icon show-all">
+                <img src="../../img/control-5.png" alt="" class="pic icon onlyshow-zk">
+                <img src="../../img/control-6.png" alt="" class="pic icon onlyshow-cc">
+                <img src="../../img/control-7.png" alt="" class="pic icon">
+            </div>
+            <div class="a2">
+                <img src="../../img/control-8.png" alt="" class="pic icon2">
+                <img src="../../img/control-9.png" alt="" class="pic icon2">
+                <img src="../../img/control-10.png" alt="" class="pic icon2">
+                <img src="../../img/control-11.png" alt="" class="pic icon2">
+                <img src="../../img/control-12.png" alt="" class="pic icon2">
+                <img src="../../img/control-13.png" alt="" class="pic icon2">
+                <img src="../../img/control-14.png" alt="" class="pic icon2">
+            </div>
+        </div>
+    </div>
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/echarts.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DisGG5S6GStO0Hl5Cz8DtcklcGawcYne"></script>
+    <script src="../../js/control/controlMain.js"></script>
+    <script src="../../js/control/controlMap.js"></script>
+    <!--<script src="../../js/control/controlMain.js"></script>-->
+</body>
+</html>

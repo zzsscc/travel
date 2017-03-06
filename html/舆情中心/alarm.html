@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>告警设置</title>
+    <style>
+        /*通用样式*/
+        html,body,ul,li{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family:'Microsoft Yahei';
+        }
+        .clearfix:after{
+            content:'';
+            display:block;
+            clear:both;
+        }
+        li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        .container{
+            width:1200px;
+            margin:0 auto;
+        }
+        /*头部*/
+        #header{
+            background-color: #191919;
+        }
+        #header .container{
+            height:50px;
+            line-height: 50px;
+            color:#fff;
+        }
+        #header .aside-left{
+            width: 215px;
+            font-size:14px;
+            float: left;
+            text-align: left;
+        }
+        #header .header-center{
+            float:left;
+        }
+        #header .header-center li{
+            float:left;
+            width:140px;
+            text-align: left;
+        }
+        #header .header-center li a{
+            height: 47px;
+            width:72px;
+            display: block;
+            position:relative;
+            text-align: center;
+            font-size: 14px;
+            color:#fff;
+        }
+        #header .header-center li a:hover{
+            color:#05a07f;
+            border-bottom: 2px solid #05a07f;
+        }
+        #header .aside-right{
+            float: right;
+            text-align: right;
+            font-size:12px;
+        }
+        #header .h-active{
+            color:#05a07f !important;
+            border-bottom: 2px solid #05a07f;
+        }
+        /*底部*/
+        #footer{
+            margin-top:50px;
+            background-color: #191919;
+        }
+        #footer .container{
+            height:66px;
+            line-height: 66px;
+            text-align: center;
+            color:#999;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="container clearfix">
+        <div class="aside-left">椒江旅游大数据平台</div>
+        <div class="header-center">
+            <ul class="clearfix">
+                <li><a href="../control/control.html" >管控中心</a></li>
+                <li><a href="../operation/operation.html">运维中心</a></li>
+                <li><a href="../态势中心/come-go-situation.html">态势中心</a></li>
+                <li><a href="../marketing/revenue-analyze.html">营销中心</a></li>
+                <li><a href="../舆情中心/public-sentiment-analyze.html" class="h-active">舆情中心</a></li>
+                <li><a href="../bigScreen/bigScreen.html">可视化大屏</a></li>
+            </ul>
+        </div>
+        <div class="aside-right"><span class="user-information">欢迎您，<span class="user-name">admin</span></span> | <span class="user-action">注销</span></div>
+    </div>
+</div>
+<div id="main">
+
+</div>
+<div id="footer">
+    <div class="container">
+        Copyright © 2016 杭州以数科技有限公司
+    </div>
+</div>
+</body>
+</html>

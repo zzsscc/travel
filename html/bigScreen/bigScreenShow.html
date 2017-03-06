@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>大屏中心</title>
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/basic-properties-public.css">
+    <style>
+        body{
+            background: #090b17;
+        }
+        #main{
+            box-sizing: border-box;
+            width: 1920px;
+            padding: 20px 40px;
+            height: 1080px;
+        }
+        .top-left,.top-map,.top-right{
+            float: left;
+        }
+        #main .top{
+            box-sizing: border-box;
+            height: 650px;
+            width: 1840px;
+            margin-bottom: 20px;
+        }
+        #main .top-left{
+            width: 400px;
+            margin-right: 20px;
+        }
+        #main .top-map{
+            width: 930px;
+            height: 600px;
+            background: url('img/中.png');
+            margin-right: 20px;
+        }
+        #main .top-right{
+            width: 470px;
+        }
+        #main .bottom{
+            box-sizing: border-box;
+            height: 370px;
+            width: 1840px;
+        }
+        .overview,.year,.scenic-revenue,.revenue-streams,.bottom-left,.bottom-center,.bottom-right{
+            float: left;
+        }
+        #main .big-title{
+            box-sizing: border-box;
+            font-size: 18px;
+            color: #28cfff;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            width: 100%;
+        }
+        #main .big-title-lag{
+            height: 45px;
+            line-height: 45px;
+            font-size: 20px;
+        }
+        /*Overview*/
+        #main .overview{
+            width: 400px;
+            height: 320px;
+            background: url('img/左上.png');
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            padding-left: 17px;
+            padding-top: 10px;
+        }
+        .now-people,.today-people{
+            height:60px;
+            border-left: 1px solid #fff;
+            box-sizing: border-box;
+            padding-left: 18px;
+        }
+        #main .overview-now{
+            box-sizing: border-box;
+            width: 365px;
+            height: 100px;
+            background: #00c199 url(../../img/big-now.png) 34px 20px no-repeat;
+            border: 1px solid #b1b1b1;
+            margin-bottom: 16px;
+            padding-top: 20px;
+            padding-left: 123px;
+            color: #fff;
+            font-size: 24px;
+        }
+        #main .overview-now-word,.overview-today-word{
+            height: 22px;
+            line-height: 22px;
+        }
+        #main .overview-now-num,.overview-today-num{
+            font-size: 36px;
+        }
+        #main .overview-today{
+            box-sizing: border-box;
+            width: 365px;
+            height: 100px;
+            background: #15c0ff url(../../img/big-today.png) 34px 20px no-repeat;
+            border: 1px solid #b1b1b1;
+            margin-bottom: 10px;
+            padding-top: 20px;
+            padding-left: 123px;
+            color: #fff;
+            font-size: 24px;
+        }
+        #main .overview-sum{
+            box-sizing: border-box;
+            width: 365px;
+            height: 70px;
+            background: #7d3cf4;
+            border: 1px solid #b1b1b1;
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+        #main .overview-sum div{
+            float: left;
+            height: 70px;
+            line-height: 70px;
+            color:#fff;
+            font-size: 28px;
+        }
+        #main .overview-sum div:first-child{
+            margin-right: 10px;
+        }
+        #main .overview-sum div:last-child{
+            font-size: 36px;
+        }
+        /*year*/
+        #main .year{
+            width: 400px;
+            height: 320px;
+            background: url('img/左.png') no-repeat;
+        }
+        #year-chart{
+            width:100%;
+            height: 280px;
+        }
+        /*main-top-title*/
+        #main .main-top-title{
+            height: 50px;
+            box-sizing: border-box;
+            margin-bottom: -50px;
+            color: #28cfff;
+            font-size: 40px;
+            width: 927px;
+            position: absolute;
+            top:-50px;
+            line-height: 42px;
+            background: url('img/logo.png')  100% 0 no-repeat;
+        }
+        /*map*/
+        .top-map{
+            position: relative;
+            margin-top: 50px;
+            box-sizing: border-box;
+            padding-left: 3px;
+        }
+        .top-map .big-title{
+            margin-bottom: 8px;
+        }
+        #main #top-map-center{
+            box-sizing: border-box;
+            width: 925px;
+            height: 545px;
+        }
+        /*scenic-revenue,revenue-streams*/
+        #main .scenic-revenue,#main .revenue-streams{
+            width: 470px;
+            height: 320px;
+            background: url('img/右.png') no-repeat;
+        }
+        /*scenic-revenue*/
+        #main .scenic-revenue{
+            margin-bottom: 10px;
+        }
+        #main .scenic-revenue .buttons{
+            width: 100%;
+            height: 50px;
+            border-radius: 3px;
+        }
+        #main .buttons{
+            box-sizing: border-box;
+            width: 100%;
+            height: 50px;
+            padding: 18px;
+        }
+        #main .buttons .btn{
+            padding: 0;
+            width: 100px;
+            height: 30px;
+            margin-right: 6px;
+            color: #fff;
+            background: #2575ce;
+            line-height: 30px;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        #main .btn.active{
+            background: #13a5f9;
+        }
+        #main .buttons .btn:last-child{
+            margin-right: 0;
+        }
+        #main .scenic-revenue .follow-chart{
+            box-sizing: border-box;
+            height: 245px;
+            width: 100%;
+            padding-top: 20px;
+            padding-left: 2px;
+        }
+        #main .hotel-ul{
+            font-size: 14px;
+            color: #fff;
+            margin-left: -30px;
+        }
+        #main .hotel-ul .hotel-li{
+            margin-bottom: 14px;
+        }
+        .hotel-title,.hotel-strip,.hotel-num{
+            float: left;
+        }
+        #main .hotel-num{
+            margin-right: 28px;
+            float: right;
+            color:#15c0ff;
+            text-align: end;
+        }
+        #main .hotel-li .hotel-title{
+            width: 100px;
+            text-align: end;
+            margin-right: 20px;
+        }
+        #main .hotel-li .hotel-strip{
+            height: 14px;
+            width: 80px;
+            background: #15c0ff;
+            margin-right: 20px;
+            margin-top: 4px;
+        }
+        #main .hotel-li .hotel-strip.point{
+            background: #15c0ff;
+        }
+        /*revenue-streams*/
+        #main #revenue-streams-chart{
+            width:100%;
+            box-sizing: border-box;
+            height: 275px;
+        }
+        /*bottom-left,bottom-center,bottom-right*/
+        #main .bottom-left,.bottom-center,.bottom-right{
+            width: 600px;
+            height: 370px;
+            background: url('img/下.png');
+            margin-right: 20px;
+        }
+        /*bottom-left*/
+        #main .bottom-left-title{
+            font-size: 15px;
+            padding-top: 15px;
+        }
+        #main .bottom-left-title li {
+            color: #15c0ff;
+        }
+        #main .bottom-left-title li:nth-child(1){
+            margin-left: 62px;
+            float: left;
+        }
+        #main .bottom-left-title li:nth-child(2),#main .bottom-left-title li:nth-child(3){
+            margin-right: 26px;
+            float: right;
+        }
+        #main .bottom-left-title li:nth-child(3){
+            margin-right:37px;
+        }
+        #main .bottom-left-div{
+            box-sizing: border-box;
+            width: 100%;
+            height:238px;
+            padding-top: 20px;
+            padding-left: 30px;
+            padding-right: 28px;
+        }
+        #main .bottom-left-div li{
+            height: 34px;
+            margin-bottom: 17px;
+            border-bottom: 1px solid #213056;
+        }
+        #main .bottom-left-num,.bottom-left-word,.bottom-left-date,.bottom-left-time{
+            float: left;
+            font-size: 14px;
+        }
+        #main .bottom-left-num{
+            color:#fff;
+            box-sizing: border-box;
+            width: 24px;
+            height:24px;
+            line-height: 24px;
+            border-radius: 50%;
+            background: #7d3cf4;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .bottom-left-word,.bottom-left-date,.bottom-left-time{
+            color:#15c0ff;
+            margin-top: 1px;
+        }
+        .bottom-left-date,.bottom-left-time{
+            float: right;
+        }
+        .bottom-left-date{
+            margin-right: 40px;
+        }
+        #main .bottom-left-div li:first-child .bottom-left-num{
+            background: #d9523f;
+        }
+        #main .bottom-left-div li:first-child .bottom-left-word,
+        #main .bottom-left-div li:first-child .bottom-left-date{
+            color: #fff;
+        }
+        /*bottom-right*/
+        .bottom-right{
+            margin-right: 0;
+        }
+        #bottom-right-chart{
+            height: 325px;
+            width: 100%;
+        }
+        /*bottom-center*/
+        #main .bottom-center .follow-chart{
+            height: 325px;
+            width: 100%;
+            padding-top: 40px;
+            padding-left: 34px;
+        }
+        #main .hot-ul{
+            font-size: 16px;
+            color: #fff;
+        }
+        #main .hot-ul .hot-li{
+            margin-bottom: 16px;
+        }
+        .hot-title,.hot-strip,.hot-num{
+            float: left;
+        }
+        #main .hot-num{
+            color:#208af5;
+        }
+        #main .hot-li .hot-title{
+            width: 100px;
+            text-align: end;
+            margin-right: 20px;
+        }
+        #main .hot-li .hot-strip{
+            height: 16px;
+            width: 80px;
+            border-radius: 0 10px 10px 0;
+            background: #15c0ff;
+            margin-right: 20px;
+            margin-top: 4px;
+        }
+        #main .hot-li .hot-strip.point{
+            background: #15c0ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="top clearfix">
+            <div class="top-left clearfix">
+                <div class="overview">
+                    <div class="overview-now">
+                        <div class="now-people">
+                            <div class="overview-now-word">当前景区人数</div>
+                            <div class="overview-now-num">3450</div>
+                        </div>
+                    </div>
+                    <div class="overview-today">
+                        <div class="today-people">
+                            <div class="overview-today-word">今日游客人数</div>
+                            <div class="overview-today-num">5000</div>
+                        </div>
+                    </div>
+                    <div class="overview-sum clearfix">
+                        <div class="overview-sum-word">全年游客总数:</div>
+                        <div class="overview-sum-num">2325625</div>
+                    </div>
+                </div>
+                <div class="year">
+                    <div class="big-title">近八个月客流量分析</div>
+                    <div id="year-chart"></div>
+                </div>
+            </div>
+            <div class="top-map">
+                <div class="main-top-title">全域旅游可视化大屏</div>
+                <div class="big-title">客源地分析</div>
+                <div id="top-map-center"></div>
+            </div>
+            <div class="top-right clearfix">
+                <div class="scenic-revenue">
+                    <div class="big-title big-title-lag">景区营收</div>
+                    <div class="buttons">
+                        <button class="btn active">今日营收</button>
+                        <button class="btn">本周营收</button>
+                        <button class="btn">本月营收</button>
+                        <button class="btn">全年营收</button>
+                    </div>
+                    <div class="follow-chart">
+                        <ul class="hotel-ul">
+                            <li class="hotel-li clearfix">
+                                <div class="hotel-title">酒店</div>
+                                <div class="hotel-strip point"></div>
+                                <div class="hotel-num">333</div>
+                            </li>
+                            <li class="hotel-li clearfix">
+                                <div class="hotel-title">门票</div>
+                                <div class="hotel-strip point"></div>
+                                <div class="hotel-num"></div>
+                            </li>
+                            <li class="hotel-li clearfix">
+                                <div class="hotel-title">餐饮</div>
+                                <div class="hotel-strip point"></div>
+                                <div class="hotel-num"></div>
+                            </li>
+                            <li class="hotel-li clearfix">
+                                <div class="hotel-title">交通</div>
+                                <div class="hotel-strip"></div>
+                                <div class="hotel-num"></div>
+                            </li>
+                            <li class="hotel-li clearfix">
+                                <div class="hotel-title">纪念品</div>
+                                <div class="hotel-strip"></div>
+                                <div class="hotel-num"></div>
+                            </li>
+                            <li class="hotel-li clearfix">
+                                <div class="hotel-title">其他</div>
+                                <div class="hotel-strip"></div>
+                                <div class="hotel-num"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="revenue-streams">
+                    <div class="big-title big-title-lag">营收来源</div>
+                    <div id="revenue-streams-chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom clearfix">
+            <div class="bottom-left">
+                <div class="big-title big-title-lag">景区实时动态</div>
+                <div class="bottom-left-title">
+                    <ul class="clearfix">
+                        <li>动态列表</li>
+                        <li>处理状况</li>
+                        <li>区域</li>
+                    </ul>
+                </div>
+                <div class="bottom-left-div">
+                    <ul class="bottom-left-ul">
+                        <li class="clearfix">
+                            <div class="bottom-left-num">1</div>
+                            <div class="bottom-left-word">天后宫景区管理员拾到皮包一个，需寻找失主</div>
+                            <div class="bottom-left-time">待处理</div>
+                            <div class="bottom-left-date">天后宫</div>
+                        </li>
+                        <li>
+                            <div class="bottom-left-num">2</div>
+                            <div class="bottom-left-word">鱼师庙景区游客过多，需要管控</div>
+                            <div class="bottom-left-time">已处理</div>
+                            <div class="bottom-left-date">鱼师庙</div>
+                        </li>
+                        <li>
+                            <div class="bottom-left-num">3</div>
+                            <div class="bottom-left-word">浪通门景区风浪过大，需疏导游客</div>
+                            <div class="bottom-left-time">已处理</div>
+                            <div class="bottom-left-date">浪通门</div>
+                        </li>
+                        <li>
+                            <div class="bottom-left-num">4</div>
+                            <div class="bottom-left-word">甲午岩景区垃圾箱需要清理</div>
+                            <div class="bottom-left-time">已处理</div>
+                            <div class="bottom-left-date">甲午岩</div>
+                        </li>
+                        <li>
+                            <div class="bottom-left-num">5</div>
+                            <div class="bottom-left-word">帽雨沙景区游客过多，需要管控</div>
+                            <div class="bottom-left-time">已处理</div>
+                            <div class="bottom-left-date">帽雨沙</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom-center">
+                <div class="big-title big-title-lag">当前各景点游客分布数</div>
+                <div class="follow-chart">
+                    <ul class="hot-ul">
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">甲午岩</div>
+                            <div class="hot-strip point"></div>
+                            <div class="hot-num">333</div>
+                        </li>
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">少年宫</div>
+                            <div class="hot-strip point"></div>
+                            <div class="hot-num"></div>
+                        </li>
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">垦荒碑</div>
+                            <div class="hot-strip point"></div>
+                            <div class="hot-num"></div>
+                        </li>
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">郎通门</div>
+                            <div class="hot-strip"></div>
+                            <div class="hot-num"></div>
+                        </li>
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">鱼师庙</div>
+                            <div class="hot-strip"></div>
+                            <div class="hot-num"></div>
+                        </li>
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">天后宫</div>
+                            <div class="hot-strip"></div>
+                            <div class="hot-num"></div>
+                        </li>
+                        <li class="hot-li clearfix">
+                            <div class="hot-title">帽雨沙</div>
+                            <div class="hot-strip"></div>
+                            <div class="hot-num"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom-right">
+                <div class="big-title big-title-lag">今日游客车辆饱和指数</div>
+                <div id="bottom-right-chart"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/echarts.js"></script>
+    <script src="../../js/bigScreen/bigScreenMain.js"></script>
+    <script src="../../js/bigScreen/yearChart.js"></script>
+    <script src="../../js/bigScreen/revenueStreamsChart.js"></script>
+    <script src="../../js/bigScreen/bottomRightChart.js"></script>
+    <script src="../../js/bigScreen/china.js"></script>
+</body>
+</html>

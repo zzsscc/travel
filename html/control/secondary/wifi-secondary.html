@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>流量监控</title>
+    <link rel="stylesheet" href="../../../css/public.css">
+    <style>
+        /*字体*/
+        @font-face {
+            font-family: 'iconfont';
+            src: url('http://at.alicdn.com/t/font_1473400777_9506023.eot'); /* IE9*/
+            src: url('http://at.alicdn.com/t/font_1473400777_9506023.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('http://at.alicdn.com/t/font_1473400777_9506023.woff') format('woff'), /* chrome、firefox */
+            url('http://at.alicdn.com/t/font_1473400777_9506023.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('http://at.alicdn.com/t/font_1473400777_9506023.svg#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        .iconfont {
+            font-family:'iconfont';
+            font-style:normal;
+            color:#666;
+        }
+        /*3个模块整体样式*/
+        #main .part{
+            margin-top: 40px;
+        }
+        #main .part .part-title{
+            box-sizing: border-box;
+            height:40px;
+            border-top: 1px solid #e3e3e3;
+            font-size: 16px;
+        }
+        #main .part-title .wenzi{
+            border-top:1px solid #00c199 ;
+            width: 98px;
+            line-height: 40px;
+        }
+        #main .part-title .wenzi{
+            width: 130px;
+        }
+        #main .part-title .wenzi{
+            width: 130px;
+        }
+        /*分页器样式*/
+        #main .page-wrap{
+            margin-top: 35px;
+            margin-right: 20px;
+            margin-bottom: 30px;
+        }
+        #main .page-wrap li{
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            line-height:30px;
+            float: right;
+            color:#00c199;
+            border: 1px solid #e4e4e4;
+            margin-left: 5px;
+        }
+        #main .page-wrap li:hover{
+            cursor: pointer;
+        }
+        #main .page-wrap .big-li{
+            height: 30px;
+            width: 65px;
+        }
+        #main .page-wrap .page-active{
+            background-color: #00c199;
+            color:#fff;
+        }
+        /*分页器样式*/
+        /*machine*/
+        #main .machine{
+            border: 1px solid #c4c4c4;
+            margin-top: 15px;
+        }
+        #main .parking-management-table{
+            margin-top: 20px;
+            box-sizing: border-box;
+            height: 500px;
+            margin-bottom: 60px;
+            width: 96%;
+            margin-left: 2%;
+        }
+        .parking-management-table table{
+            border-collapse: collapse;
+            margin-bottom: 60px;
+        }
+        .parking-management-table thead{
+            font-size: 16px;
+            color: #00c199;
+            background: #f1f1f1;
+        }
+        .parking-management-table tbody{
+            font-size: 14px;
+            color: #666;
+        }
+        .parking-management-table tbody td:last-child{
+            cursor: pointer;
+        }
+        .parking-management-table tbody tr:nth-child(2n){
+            background: #f1f1f1;
+        }
+        .parking-management-table tr{
+            height: 40px;
+            text-align: center;
+        }
+        .parking-management-table td{
+            width: 280px;
+        }
+        /*操作弹窗*/
+        #main .put{
+            display: none;
+        }
+        #main .put > div:first-child{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:#000;
+            opacity:0.5;
+            filter:alpha(opacity=50);
+            z-index:9999;
+        }
+        #main .popup{
+            position:fixed;
+            width:420px;
+            height:320px;
+            top: 50%;
+            left: 50%;
+            margin-top:-200px;
+            margin-left:-200px;
+            background: #fff;
+            border-radius: 4px;
+            z-index:10000;
+        }
+        #main .popup-title{
+            box-sizing: border-box;
+            width: 100%;
+            height:48px;
+            padding-left: 130px;
+            line-height: 48px;
+            background: #00c199;
+            color: #fff;
+            font-size: 24px;
+        }
+        #main .popup-close{
+            width: 24px;
+            height:24px;
+            background: url(../../../img/wifisecond-close.png);
+            float: right;
+            cursor: pointer;
+            margin-top: 12px;
+            margin-right: 20px;
+        }
+        #main .popup-options{
+            width: 380px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        #main .popup-options .option{
+            height: 44px;
+            margin-bottom: 12px;
+            line-height: 44px;
+            border-bottom: 1px solid #c7c7c7;
+            font-size: 18px;
+        }
+        .option-word{
+            float: left;
+        }
+        #main .popup-options .option:first-child{
+            color:#00c199;
+        }
+        #main .popup-options .option:first-child .outside.active{
+            border-color: #00c199;
+        }
+        #main .popup-options .option:first-child .inside.active{
+            background: #00c199;
+        }
+        #main .popup-options .option:nth-child(2){
+            color:#0fa2f2;
+        }
+        #main .popup-options .option:nth-child(2) .outside.active{
+            border-color: #0fa2f2;
+        }
+        #main .popup-options .option:nth-child(2) .inside.active{
+            background: #0fa2f2;
+        }
+        #main .popup-options .option:nth-child(3){
+            color:#ff4949;
+        }
+        #main .popup-options .option:nth-child(3) .outside.active{
+            border-color: #ff4949;
+        }
+        #main .popup-options .option:nth-child(3) .inside.active{
+            background: #ff4949;
+        }
+        #main .popup button{
+            height: 50px;
+            line-height: 50px;
+            width: 380px;
+            margin-top: 15px;
+            margin-left:20px;
+            font-size: 18px;
+            color: #fff;
+            background: #00c199;
+            cursor: pointer;
+        }
+        #main .popup .outside{
+            box-sizing: border-box;
+            float: right;
+            width: 30px;
+            height:30px;
+            border: 1px solid #c7c7c7;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+        #main .popup .inside{
+            box-sizing: border-box;
+            width: 16px;
+            height:16px;
+            background: #c7c7c7;
+            border-radius: 50%;
+            margin: auto;
+            margin-top: 6px;
+        }
+    </style>
+<body>
+<div id="header">
+    <div class="container clearfix">
+        <div class="aside-left">椒江旅游大数据平台</div>
+        <div class="header-center">
+            <ul class="clearfix">
+                <li><a href="../../control/control.html"  class="active">管控中心</a></li>
+                <li><a href="../../operation/operation.html">运维中心</a></li>
+                <li><a href="../../态势中心/come-go-situation.html">态势中心</a></li>
+                <li><a href="../../marketing/revenue-analyze.html">营销中心</a></li>
+                <li><a href="../../舆情中心/public-sentiment-analyze.html">舆情中心</a></li>
+                <li><a href="../../bigScreen/bigScreen.html">可视化大屏</a></li>
+            </ul>
+        </div>
+        <div class="aside-right"><span class="user-information">欢迎您，<span class="user-name">admin</span></span> | <span class="user-action">注销</span></div>
+    </div>
+</div>
+<div id="main">
+    <div class="container">
+        <div class="part equipment">
+            <div class="part-title">
+                <div class="wenzi wenzi1">流量监控</div>
+            </div>
+            <div class="content clearfix">
+                <div class="machine">
+                    <div class="main-title">
+                        当前有146台设备正在访问网络，下载速度：648.25KB/S，上传速度：324.68KB/S
+                        <i class="iconfont">&#xe607</i>
+                    </div>
+                    <div class="parking-management-table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td>设备名称</td>
+                                <td>下载速度</td>
+                                <td>上次速度</td>
+                                <td>占用程序</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>低</td>
+                                <td class="wificz">不可限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>高</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>iPhone6</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">禁用网络</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            <tr>
+                                <td>vivo X7</td>
+                                <td>100.52KB/S</td>
+                                <td>66.71KB/S</td>
+                                <td>中</td>
+                                <td class="wificz">不限速</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul class="page-wrap clearfix">
+                        <li class="big-li">下一页</li>
+                        <li>42</li>
+                        <li>...</li>
+                        <li>5</li>
+                        <li>4</li>
+                        <li>3</li>
+                        <li>2</li>
+                        <li class="page-active">1</li>
+                        <li class="big-li">上一页</li>
+                    </ul>
+                    <!--分页器-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="put">
+        <div></div>
+        <div class="popup">
+            <div class="popup-title">
+                请选择操作状态
+                <div class="popup-close"></div>
+            </div>
+            <div class="popup-options">
+                <div class="option clearfix">
+                    <div class="option-word">不限速</div>
+                    <div class="outside">
+                        <div class="inside"></div>
+                    </div>
+                </div>
+                <div class="option clearfix">
+                    <div class="option-word">限速</div>
+                    <div class="outside">
+                        <div class="inside"></div>
+                    </div>
+                </div>
+                <div class="option clearfix">
+                    <div class="option-word">禁用网络</div>
+                    <div class="outside">
+                        <div class="inside"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="sure">确认修改</button>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="container">
+        Copyright &copy; 2016 杭州以数科技有限公司
+    </div>
+</div>
+
+<script src="../../../js/jquery-1.8.3.min.js"></script>
+<script src="../../../js/echarts.min.js"></script>
+<script src="../../../js/control/controlSecondwifi.js"></script>
+<script src="../../../js/control/controlSecondMain.js"></script>
+</body>
+</html>

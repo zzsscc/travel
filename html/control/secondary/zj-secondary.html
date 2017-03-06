@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>检票闸口</title>
+    <link rel="stylesheet" href="../../../css/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../../css/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="../../../css/public.css">
+    <style>
+        /*字体*/
+        @font-face {
+            font-family: 'iconfont';
+            src: url('http://at.alicdn.com/t/font_1473400777_9506023.eot'); /* IE9*/
+            src: url('http://at.alicdn.com/t/font_1473400777_9506023.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('http://at.alicdn.com/t/font_1473400777_9506023.woff') format('woff'), /* chrome、firefox */
+            url('http://at.alicdn.com/t/font_1473400777_9506023.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('http://at.alicdn.com/t/font_1473400777_9506023.svg#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        .iconfont {
+            font-family:'iconfont';
+            font-style:normal;
+            color:#666;
+        }
+        /*3个模块整体样式*/
+        #main .part{
+            margin-top: 40px;
+        }
+        #main .part .part-title{
+            box-sizing: border-box;
+            height:40px;
+            border-top: 1px solid #e3e3e3;
+            font-size: 16px;
+        }
+        #main .part-title .wenzi{
+            border-top:1px solid #00c199 ;
+            width: 98px;
+            line-height: 40px;
+        }
+        #main .part-title .wenzi{
+            width: 130px;
+        }
+        #main .part-title .wenzi{
+            width: 130px;
+        }
+        /*分页器样式*/
+        #main .page-wrap{
+            float: right;
+            margin-right: 20px;
+            margin-bottom: 30px;
+        }
+        #main .page-wrap li{
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            line-height:30px;
+            float: right;
+            color:#00c199;
+            border: 1px solid #e4e4e4;
+            margin-left: 5px;
+        }
+        #main .page-wrap li:hover{
+            cursor: pointer;
+        }
+        #main .page-wrap .big-li{
+            height: 30px;
+            width: 65px;
+        }
+        #main .page-wrap .page-active{
+            background-color: #00c199;
+            color:#fff;
+        }
+        /*查询*/
+        #main .query{
+            float: left;
+            width: 250px;
+            margin-top: 22px;
+            margin-left: 20px;
+        }
+        .begin,.end{
+            font-size: 16px;
+            height: 30px;
+            margin-bottom: 50px;
+        }
+        .begin div:first-child,.end div:first-child{
+            font-size: 16px;
+            float: left;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+        #main .begin-time,#main .end-time{
+            box-sizing: border-box;
+            float: right;
+            font-size: 14px;
+            width: 150px;
+            height: 30px;
+            border: 1px solid #dddddd;
+            text-align: center;
+            color: #666666;
+            background: #fafafa;
+        }
+        #main .query button{
+            width: 120px;
+            height: 30px;
+            background: #00c199;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #fff;
+            float: right;
+            cursor: pointer;
+        }
+        /*machine*/
+        #main .machine{
+            border: 1px solid #c4c4c4;
+            margin-top: 15px;
+        }
+        #main .parking-management-table{
+            margin-top: 20px;
+            box-sizing: border-box;
+            height: 520px;
+            margin-bottom: 40px;
+            width: 870px;
+            float: right;
+        }
+        .parking-management-table table{
+            border-collapse: collapse;
+            margin-bottom: 60px;
+        }
+        .parking-management-table thead{
+            font-size: 16px;
+            color: #00c199;
+            background: #f1f1f1;
+        }
+        .parking-management-table tbody{
+            font-size: 16px;
+            color: #666;
+        }
+        .parking-management-table tbody tr:nth-child(2n){
+            background: #f1f1f1;
+        }
+        .parking-management-table tr{
+            height: 40px;
+            text-align: left;
+        }
+        .parking-management-table td{
+            padding-left: 20px;
+            width: 410px;
+        }
+        /*表格信息*/
+        #main .parking-management-table-info{
+            float: right;
+            margin-bottom: 35px;
+            width: 870px;
+            font-size: 20px;
+            color: #333;
+        }
+        /*该日历ui样样式*/
+        .ui-widget-header .ui-icon {
+            background-image: url(images/ui-icons_ffffff_256x240.png);
+        }
+        .ui-state-hover .ui-icon {
+            background-image: url(images/ui-icons_ef8c08_256x240.png);
+        }
+    </style>
+<body>
+<div id="header">
+    <div class="container clearfix">
+        <div class="aside-left">椒江旅游大数据平台</div>
+        <div class="header-center">
+            <ul class="clearfix">
+                <li><a href="../../control/control.html"  class="active">管控中心</a></li>
+                <li><a href="../../operation/operation.html">运维中心</a></li>
+                <li><a href="../../态势中心/come-go-situation.html">态势中心</a></li>
+                <li><a href="../../marketing/revenue-analyze.html">营销中心</a></li>
+                <li><a href="../../舆情中心/public-sentiment-analyze.html">舆情中心</a></li>
+                <li><a href="../../bigScreen/bigScreen.html">可视化大屏</a></li>
+            </ul>
+        </div>
+        <div class="aside-right"><span class="user-information">欢迎您，<span class="user-name">admin</span></span> | <span class="user-action">注销</span></div>
+    </div>
+</div>
+<div id="main">
+    <div class="container">
+        <div class="part equipment">
+            <div class="part-title">
+                <div class="wenzi wenzi1">检票闸口</div>
+            </div>
+            <div class="content clearfix">
+                <div class="machine clearfix">
+                    <div class="main-title">
+                        当前查看设备：景区东入口闸机 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 闸机状态：正常
+                        <i class="iconfont">&#xe607</i>
+                    </div>
+                    <div class="query">
+                        <div class="begin clearfix">
+                            <div>开始时间：</div>
+                            <input  class="begin-time" type="text" id="begin-datepicker">
+                        </div>
+                        <div class="end clearfix">
+                            <div>结束时间：</div>
+                            <input  class="end-time" type="text" id="end-datepicker">
+                        </div>
+                        <button>查询</button>
+                    </div>
+                    <div class="parking-management-table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td>时间</td>
+                                <td>检票结果</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;11:22:07</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;11:18:41</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;11:15:21</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;11:10:14</td>
+                                <td class="whether">检票失败</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:57:21</td>
+                                <td class="whether">检票失败</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:40:45</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:29:57</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:25:03</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:22:12</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:05:15</td>
+                                <td class="whether">检票失败</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;10:01:06</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            <tr>
+                                <td>2016-09-19&nbsp;&nbsp;09:50:07</td>
+                                <td class="whether">检票成功</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="parking-management-table-info">
+                        该时间段累计检票：260次  验证成功：250次  验证失败：10次
+                    </div>
+                    <ul class="page-wrap clearfix">
+                        <li class="big-li">下一页</li>
+                        <li>42</li>
+                        <li>...</li>
+                        <li>5</li>
+                        <li>4</li>
+                        <li>3</li>
+                        <li>2</li>
+                        <li class="page-active">1</li>
+                        <li class="big-li">上一页</li>
+                    </ul>
+                    <!--分页器-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="container">
+        Copyright &copy; 2016 杭州以数科技有限公司
+    </div>
+</div>
+
+<script src="../../../js/jquery-1.8.3.min.js"></script>
+<script src="../../../js/echarts.min.js"></script>
+<script src="../../../js/jquery-ui.min.js"></script>
+<script src="../../../js/jquery.ui.datepicker-zh-CN.js"></script>
+<script src="../../../js/jquery-ui-timepicker-addon.js"></script>
+<script src="../../../js/jquery-ui-timepicker-zh-CN.js"></script>
+<script src="../../../js/control/controlSecondzj.js"></script>
+<script src="../../../js/control/controlSecondMain.js"></script>
+</body>
+</html>

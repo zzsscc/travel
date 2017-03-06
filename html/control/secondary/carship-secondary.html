@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>车船系统</title>
+    <link rel="stylesheet" href="../../../css/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../../css/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="../../../css/public.css">
+    <style>
+        /*字体*/
+        @font-face {
+            font-family: 'iconfont';
+            src: url('http://at.alicdn.com/t/font_1473400777_9506023.eot'); /* IE9*/
+            src: url('http://at.alicdn.com/t/font_1473400777_9506023.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('http://at.alicdn.com/t/font_1473400777_9506023.woff') format('woff'), /* chrome、firefox */
+            url('http://at.alicdn.com/t/font_1473400777_9506023.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('http://at.alicdn.com/t/font_1473400777_9506023.svg#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        .iconfont {
+            font-family:'iconfont';
+            font-style:normal;
+            color:#666;
+        }
+        /*3个模块整体样式*/
+        #main .part{
+            margin-top: 40px;
+        }
+        #main .part .part-title{
+            box-sizing: border-box;
+            height:40px;
+            border-top: 1px solid #e3e3e3;
+            font-size: 16px;
+        }
+        #main .part-title .wenzi{
+            border-top:1px solid #00c199 ;
+            width: 98px;
+            line-height: 40px;
+        }
+        #main .part-title .wenzi{
+            width: 130px;
+        }
+        #main .part-title .wenzi{
+            width: 130px;
+        }
+        /*分页器样式*/
+        #main .page-wrap{
+            float: right;
+            margin-right: 20px;
+            margin-bottom: 30px;
+        }
+        #main .page-wrap li{
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            line-height:30px;
+            float: right;
+            color:#00c199;
+            border: 1px solid #e4e4e4;
+            margin-left: 5px;
+        }
+        #main .page-wrap li:hover{
+            cursor: pointer;
+        }
+        #main .page-wrap .big-li{
+            height: 30px;
+            width: 65px;
+        }
+        #main .page-wrap .page-active{
+            background-color: #00c199;
+            color:#fff;
+        }
+        /*选择*/
+        #main .query{
+            float: left;
+            width: 250px;
+            margin-top: 22px;
+            margin-left: 20px;
+        }
+        #main .choose{
+            box-sizing: border-box;
+            height: 30px;
+            width: 220px;
+            margin-bottom: 10px;
+        }
+        #main .choose .choose-word,#main .choose .choose-drop-down{
+            box-sizing: border-box;
+            float: left;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #a9a9a9;
+            color:#333;
+            font-size: 14px;
+        }
+        #main .choose .choose-word{
+            box-sizing: border-box;
+            width: 77px;
+            font-weight: bold;
+            border-radius: 4px 0 0 4px;
+            text-align: center;
+        }
+        #main .choose .choose-drop-down{
+            box-sizing: border-box;
+            width:143px;
+            border-radius: 0 4px 4px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        #main .choose-drop-down-word{
+            float: left;
+        }
+        #main .choose-drop-pic{
+            width: 0;
+            height: 0;
+            float: right;
+            border: 6px solid transparent;
+            border-top: 6px solid #00c199;
+            margin-top: 12px;
+            margin-right: 10px;
+        }
+        #main .choose-drop-other{
+            box-sizing: border-box;
+            position: absolute;
+            width: 143px;
+            border: 1px solid #a9a9a9;
+            top: 28px;
+            left: -1px;
+            background: #fff;
+            display: none;
+        }
+        #main .choose-drop-other div{
+            padding-left: 10px;
+        }
+        #main .choose-drop-other div:not(:last-child){
+            border-bottom: 1px solid #a9a9a9;
+        }
+        #main .choose-info{
+            border: 1px solid #a9a9a9;
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 220px;
+        }
+        #main .choose-info-title{
+            height: 30px;
+            line-height: 30px;
+            font-size: 18px;
+            text-align: center;
+            background: #00c199;
+            color:#fff;
+            margin-bottom: 18px;
+        }
+        #main .choose-info-top,#main .choose-info-bottom{
+            box-sizing: border-box;
+            font-size: 14px;
+            margin-left: 22px;
+            width: 175px;
+            margin-bottom: 20px;
+        }
+        #main .choose-info-top div:first-child,#main .choose-info-bottom div:first-child{
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #main .choose-info-top div:not(:first-child),#main .choose-info-bottom div:not(:first-child){
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e3e3e3;
+        }
+        #main .choose-info-top div:nth-child(2) span,#main .choose-info-bottom div:nth-child(2) span{
+            margin-right: 35px;
+        }
+        #main .choose-info-top div:nth-child(3) span,#main .choose-info-bottom div:nth-child(3) span{
+            margin-right: 50px;
+        }
+        /*machine*/
+        #main .machine{
+            border: 1px solid #c4c4c4;
+            margin-top: 15px;
+        }
+        .outin-table table{
+            border-collapse: collapse;
+            float: right;
+            margin: 15px 20px 40px 20px;
+        }
+        .outin-table thead{
+            font-size: 16px;
+            color: #00c199;
+            background: #f1f1f1;
+        }
+        .outin-table tbody{
+            font-size: 16px;
+            color: #666;
+        }
+        .outin-table tbody tr:nth-child(2n){
+            background: #f1f1f1;
+        }
+        .outin-table tr{
+            height: 40px;
+            text-align: center;
+        }
+        .outin-table td{
+            text-align: left;
+            word-break:keep-all;
+            white-space:nowrap;
+            padding-left: 10px;
+            padding-right: 48px;
+        }
+        /*该日历ui样样式*/
+        .ui-widget-header .ui-icon {
+            background-image: url(images/ui-icons_ffffff_256x240.png);
+        }
+        .ui-state-hover .ui-icon {
+            background-image: url(images/ui-icons_ef8c08_256x240.png);
+        }
+    </style>
+<body>
+<div id="header">
+    <div class="container clearfix">
+        <div class="aside-left">椒江旅游大数据平台</div>
+        <div class="header-center">
+            <ul class="clearfix">
+                <li><a href="../../control/control.html"  class="active">管控中心</a></li>
+                <li><a href="../../operation/operation.html">运维中心</a></li>
+                <li><a href="../../态势中心/come-go-situation.html">态势中心</a></li>
+                <li><a href="../../marketing/revenue-analyze.html">营销中心</a></li>
+                <li><a href="../../舆情中心/public-sentiment-analyze.html">舆情中心</a></li>
+                <li><a href="../../bigScreen/bigScreen.html">可视化大屏</a></li>
+            </ul>
+        </div>
+        <div class="aside-right"><span class="user-information">欢迎您，<span class="user-name">admin</span></span> | <span class="user-action">注销</span></div>
+    </div>
+</div>
+<div id="main">
+    <div class="container">
+        <div class="part equipment">
+            <div class="part-title">
+                <div class="wenzi wenzi1">车船系统</div>
+            </div>
+            <div class="content clearfix">
+                <div class="machine clearfix">
+                    <div class="main-title">
+                        当前查看码头：下大陈码头
+                        <i class="iconfont">&#xe607</i>
+                    </div>
+                    <div class="query">
+                        <div class="choose clearfix">
+                            <div class="choose-word">选择码头</div>
+                            <div class="choose-drop-down">
+                                <div class="choose-drop-down-word">下大陈码头</div>
+                                <div class="choose-drop-pic"></div>
+                                <div class="choose-drop-other">
+                                    <div class="othermatou">上大陈码头</div>
+                                    <div class="othermatou">椒江码头</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="choose-info clearfix">
+                            <div class="choose-info-title">余 票</div>
+                            <div class="choose-info-top">
+                                <div>下大陈--上大陈</div>
+                                <div><span>卧铺</span><span>包厢</span><span>普通座</span></div>
+                                <div><span>56</span><span>54</span><span>11</span></div>
+                            </div>
+                            <div class="choose-info-bottom">
+                                <div>上大陈--下大陈</div>
+                                <div><span>卧铺</span><span>包厢</span><span>普通座</span></div>
+                                <div><span>14</span><span>31</span><span>70</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outin-table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td>出发时间</td>
+                                <td>出发地</td>
+                                <td>到达地</td>
+                                <td>总里程</td>
+                                <td>类别</td>
+                                <td>已购票乘客数</td>
+                                <td>距离开船时间</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>08:00</td>
+                                <td>下大陈</td>
+                                <td>上大陈</td>
+                                <td>2公里</td>
+                                <td>出发</td>
+                                <td>201</td>
+                                <td>0h30min</td>
+                            </tr>
+                            <tr>
+                                <td>10:00</td>
+                                <td>下大陈</td>
+                                <td>椒江</td>
+                                <td>22公里</td>
+                                <td>出发</td>
+                                <td>115</td>
+                                <td>2h30min</td>
+                            </tr>
+                            <tr>
+                                <td>12:00</td>
+                                <td>下大陈</td>
+                                <td>上大陈</td>
+                                <td>2公里</td>
+                                <td>出发</td>
+                                <td>201</td>
+                                <td>0h30min</td>
+                            </tr>
+                            <tr>
+                                <td>14:00</td>
+                                <td>下大陈</td>
+                                <td>椒江</td>
+                                <td>22公里</td>
+                                <td>出发</td>
+                                <td>115</td>
+                                <td>2h30min</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="outin-table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td>出发时间</td>
+                                <td>出发地</td>
+                                <td>到达地</td>
+                                <td>总里程</td>
+                                <td>类别</td>
+                                <td>已购票乘客数</td>
+                                <td>距离开船时间</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>08:00</td>
+                                <td>上大陈</td>
+                                <td>下大陈</td>
+                                <td>22公里</td>
+                                <td>到达</td>
+                                <td>452</td>
+                                <td>0h30min</td>
+                            </tr>
+                            <tr>
+                                <td>13:00</td>
+                                <td>椒江</td>
+                                <td>下大陈</td>
+                                <td>2公里</td>
+                                <td>到达</td>
+                                <td>185</td>
+                                <td>7h30min</td>
+                            </tr>
+                            <tr>
+                                <td>17:00</td>
+                                <td>上大陈</td>
+                                <td>下大陈</td>
+                                <td>22公里</td>
+                                <td>到达</td>
+                                <td>452</td>
+                                <td>0h30min</td>
+                            </tr>
+                            <tr>
+                                <td>120:00</td>
+                                <td>椒江</td>
+                                <td>下大陈</td>
+                                <td>2公里</td>
+                                <td>到达</td>
+                                <td>185</td>
+                                <td>7h30min</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul class="page-wrap clearfix">
+                        <li class="big-li">下一页</li>
+                        <li>42</li>
+                        <li>...</li>
+                        <li>5</li>
+                        <li>4</li>
+                        <li>3</li>
+                        <li>2</li>
+                        <li class="page-active">1</li>
+                        <li class="big-li">上一页</li>
+                    </ul>
+                    <!--分页器-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="container">
+        Copyright &copy; 2016 杭州以数科技有限公司
+    </div>
+</div>
+
+<script src="../../../js/jquery-1.8.3.min.js"></script>
+<script src="../../../js/echarts.min.js"></script>
+<script src="../../../js/control/controlSecondMain.js"></script>
+<script src="../../../js/control/controlSecondcc.js"></script>
+</body>
+</html>
